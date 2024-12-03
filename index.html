@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
+
+    <title>Aylinkine zvieratká</title>
+    <style>
+      .shower {
+        width: 600px; /* Pevná šírka */
+        height: 400px; /* Pevná výška */
+       
+        display: flex; /* Flexbox pre centrovanie obsahu */
+        justify-content: center; /* Horizontálne zarovnanie */
+        align-items: center; /* Vertikálne zarovnanie */
+      }
+      .shower img {
+        width: 100%; 
+        height: 100%; 
+        object-fit: contain;
+      }
+    </style>
+</head>
+<body>
+<div id="app">
+  <div class="container d-flex flex-column align-items-center justify-content-center text-center mt-5">
+    <div class="card w-75">
+        <div class="card-header bg-primary text-white">
+            <h1>{{ header }}</h1>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <div class="shower">
+                  <img v-if="selectedImage" :src="selectedImage" alt="zvieratko" class="animal-image">
+                </div>
+            </div>
+            <p class="card-text mt-3">Aylinka, vyber si svoje zvieratko</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <button 
+                v-for="(zvieratko, index) in zvieratka" 
+                :key="index" 
+                :tabindex="0" 
+                @click="showImage(zvieratko)" 
+                @keydown="handleArrowNavigation($event, index)"
+                class="btn btn-outline-dark">
+                {{ zvieratko.name }}
+              </button>
+            </div>
+        </div>
+    </div>
+</div>
+             
+</body>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+
+  const app = Vue.createApp({
+    data() {
+      return {
+        header: "Aylinkine zvieratká",
+        message: "Tento elementy sa schovaju ked sa klikne na tlacitko 'zmiznut'",
+        zmiznem: true,
+        zvieratka: [
+            {name: 'rybička', img: './img/rybicka.jpeg', sound: './sounds/ryba.mp3'},
+            {name: 'havo', img: './img/psik.jpeg', sound: './sounds/psik.mp3'},
+            {name: 'žabka', img: './img/zabka.jpeg', sound: './sounds/zaba-kvak.mp3'},
+            {name: 'ovečka', img: './img/ovecka.jpeg', sound: './sounds/ovecka.mp3'},
+            {name: 'vtáčik', img: './img/vtacik.jpeg', sound: './sounds/vtacik.mp3' },
+        ],
+         selectedImage: null     
+      };
+    },
+    methods: {
+      showImage(zvieratko) {
+            this.selectedImage = zvieratko.img;
+
+            const audio = new Audio(zvieratko.sound);
+            audio.play();
+        },
+
+        handleArrowNavigation(event, index) {
+        const buttons = document.querySelectorAll('.btn-outline-dark');
+        if (event.key === 'ArrowRight') {
+            // Presun na ďalšie tlačidlo
+            const nextIndex = (index + 1) % buttons.length;
+            buttons[nextIndex].focus();
+        } else if (event.key === 'ArrowLeft') {
+            // Presun na predchádzajúce tlačidlo
+            const prevIndex = (index - 1 + buttons.length) % buttons.length;
+            buttons[prevIndex].focus();
+        }
+      }
+    },
+    mounted() {
+      // Automaticky zameria prvé tlačidlo po načítaní stránky
+      this.$nextTick(() => {
+        const buttons = document.querySelectorAll('.btn-outline-dark');
+        if (buttons.length > 0) {
+          buttons[0].focus(); // Nastaví zameranie na prvé tlačidlo
+        }
+      });
+    }
+  });
+
+ app.mount('#app');
+
+</script>
+</html>
