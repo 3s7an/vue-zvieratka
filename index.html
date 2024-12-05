@@ -4,17 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
-
     <title>Aylinkine zvieratká</title>
     <style>
+      .card {
+        border-radius: 15px;
+        /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+        overflow: hidden;
+        background: transparent;
+        border: none;
+      }
+
+      .card-header {
+        background: #007bff;
+        color: #fff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .card-body {
+        padding: 20px;
+        background: transparent;
+      }
+
       .shower {
-        width: 700px; 
-        height: 500px; 
+        /* border: 3px dashed #6c757d; */
+        border-radius: 10px;
        
+        padding: 20px;
+        width: 700px; 
+        height: 500px;
         display: flex; 
         justify-content: center; 
         align-items: center; 
       }
+
       .shower img {
         width: 100%; 
         height: 100%; 
@@ -23,20 +48,23 @@
       }
 
       .btn-outline-dark {
-        font-size: 1.5em; 
-        padding: 20px 30px; 
-        border-radius: 10px; 
-        transition: transform 0.3s; 
+        font-size: 1.2em;
+        padding: 15px 25px;
+        border: 2px solid #6c757d;
+        border-radius: 20px;
+        transition: transform 0.3s, background-color 0.3s;
+        background-color: rgba(255, 255, 255, 0.8);
       }
 
-      .btn-outline-dark:focus, .btn-outline-dark:hover {
-        transform: scale(1.2); 
-        background-color: lightyellow; 
+      .btn-outline-dark:hover {
+        transform: scale(1.1);
+        background-color: #ffd700;
         color: black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
-      .bounce {
-        animation: bounce 1s ease-in-out;
+      .btn-outline-dark:focus {
+        background-color: #ffe4b5;
       }
 
       @keyframes bounce {
@@ -44,38 +72,28 @@
         50% { transform: translateY(-20px); }
       }
 
+      .bounce {
+        animation: bounce 1s ease-in-out;
+      }
+
       body {
         background-image: url('./img/pozadie.jpeg');
         background-size: cover;
+        background-attachment: fixed;
+        background-position: bottom;
       }
 
-      @keyframes moveClouds {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-      }
-
-      .cloud {
-        position: absolute;
-        top: 20%;
-        width: 200px;
-        height: 100px;
-        background: white;
-        border-radius: 50%;
-        opacity: 0.8;
-        animation: moveClouds 20s linear infinite;
-      }
+     
     </style>
 </head>
 <body>
 <div id="app">
-  <div class="cloud" style="top: 10%; left: 5%;"></div>
-<div class="cloud" style="top: 30%; left: 15%;"></div>
-<div class="cloud" style="top: 50%; left: 25%;"></div>
+  
   <div class="container d-flex flex-column align-items-center justify-content-center text-center py-5 my-5">
     <div class="card w-75">
-        <div class="card-header bg-primary text-white">
+        <!-- <div class="card-header">
             <h1>{{ header }}</h1>
-        </div>
+        </div> -->
         <div class="card-body">
             <div class="d-flex justify-content-center">
                 <div class="shower">
@@ -96,15 +114,10 @@
             </div>
         </div>
     </div>
+  </div>           
 </div>
-             
-</body>
-
-
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
 <script>
-
   const app = Vue.createApp({
     data() {
       return {
@@ -131,7 +144,7 @@
             const img = document.querySelector('.animal-image');
             if (img) {
             img.classList.add('bounce');
-            setTimeout(() => img.classList.remove('bounce'), 1000); // Zruší animáciu po 1 sekunde
+            setTimeout(() => img.classList.remove('bounce'), 1000); 
       }
     });
         },
@@ -139,30 +152,24 @@
         handleArrowNavigation(event, index) {
         const buttons = document.querySelectorAll('.btn-outline-dark');
         if (event.key === 'ArrowRight') {
-            // Presun na ďalšie tlačidlo
             const nextIndex = (index + 1) % buttons.length;
             buttons[nextIndex].focus();
         } else if (event.key === 'ArrowLeft') {
-            // Presun na predchádzajúce tlačidlo
             const prevIndex = (index - 1 + buttons.length) % buttons.length;
             buttons[prevIndex].focus();
         }
       }
     },
     mounted() {
-      // Automaticky zameria prvé tlačidlo po načítaní stránky
       this.$nextTick(() => {
         const buttons = document.querySelectorAll('.btn-outline-dark');
         if (buttons.length > 0) {
-          buttons[0].focus(); // Nastaví zameranie na prvé tlačidlo
+          buttons[0].focus();
         }
       });
     }
-
-    
   });
-
  app.mount('#app');
-
 </script>
+</body>
 </html>
