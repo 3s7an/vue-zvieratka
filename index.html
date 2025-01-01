@@ -1,181 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
     <title>Aylinkine zvieratká</title>
     <style>
-      .card {
-        border-radius: 15px;
-        /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
-        overflow: hidden;
-        background: transparent;
-        border: none;
-      }
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: transparent;
+            border: 3px solid black;
+            background-image: url('./img/pozadie.jpeg');
+            background-size: cover;
+            background-position: bottom;
 
-      .card-header {
-        background: #007bff;
-        color: wheat;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        font-family: 'Comic Sans MS', cursive, sans-serif;
-        text-align: center;
-        padding: 20px;
-      }
+        }
 
-      .card-body {
-        padding: 20px;
-        background: transparent;
-      }
+        .card-header {
+            background: whitesmoke;
+            color: lightgreen;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            padding: px;
+        }
 
-      h1 {
-        color:#9e602d;
-        background-color: wheat;
-        padding: 10px;
-        border-radius: 50%;
-        padding: 20px;
-      }
+        .card-body {
+            padding: 200px;
+            background: transparent;
+           
+        }
 
-       .shower {
- 
-        padding: 20px;
-        width: 700px; 
-        height: 500px;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-      } 
+        h1 {
+            color: #9e602d;
+            padding: 10px;
+            border-radius: 50%;
+            padding: 20px;
+        }
 
-      .shower img {
-        padding: 200px;
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; 
-        padding: 50px;
-      }
+        .shower {
 
-      .control {
-        margin-top: 100px;
-        position: relative;
-      }
+            padding: 20px;
+            width: 600px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-      .btn-outline-dark {
-        font-size: 1.2em;
-        padding: 15px 25px;
-        border: 2px solid #6c757d;
-        border-radius: 20px;
-        transition: transform 0.3s, background-color 0.3s;
-        background-color: #9e602d;;
-      }
+        .shower img {
+            padding: 10px;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 50px;
+        }
 
-      .btn-outline-dark:hover {
-        transform: scale(1.1);
-        background-color: #9e602d;
-        color: wheat;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
+        .control {
+            margin-top: 100px;
+            position: relative;
+        }
 
-      .btn-outline-dark:focus {
-        background-color: #dd985f;
-      }
+        .btn-outline-dark {
+            font-size: 1.2em;
+            border: 2px solid #6c757d;          
+            transition: transform 0.3s, background-color 0.3s;
+            background-color: #9e602d;
+            ;
+        }
 
-      @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-      }
+        .btn-outline-dark:hover {
+            transform: scale(1.1);
+            background-color: #9e602d;
+            color: wheat;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-      .bounce {
-        animation: bounce 1s ease-in-out;
-      }
+        .btn-outline-dark:focus {
+            background-color: #dd985f;
+        }
 
-      body {
-        background-size: cover;
-        background-attachment: fixed;
-        background-position: bottom;
-      }
-      
-      
+        .card {
+          transform: scale(0.8); /* Zmenší kartu na 50 % */
+          transform-origin: center; /* Stred karty ostane na mieste */
+        }
+        
 
-     
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .bounce {
+            animation: bounce 1s ease-in-out;
+        }
     </style>
 </head>
+
 <body>
-<div id="app">
-  
-  <div class="container d-flex flex-column align-items-center justify-content-center text-center py-5 my-5">
-      <h1 class="card-text mt-3 ">Aylinka, vyber si svoje zvieratko</h1>
-        <div class="d-flex flex-wrap justify-content-center gap-2 control">
-            <button 
-              v-for="(zvieratko, index) in zvieratka" 
-              :key="index" 
-              :tabindex="0" 
-               @click="showImage(zvieratko)" 
-              @keydown="handleArrowNavigation($event, index)"
-              class="btn btn-outline-dark">
-              {{ zvieratko.name }}
-            </button>  
-      </div> 
-      <div class="shower">
-        <img v-if="selectedImage" :src="selectedImage" alt="zvieratko" class="animal-image">
-      </div>          
-  </div>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script>
-  const app = Vue.createApp({
-    data() {
-      return {
-        header: "Aylinkine zvieratká",
-        message: "Tento elementy sa schovaju ked sa klikne na tlacitko 'zmiznut'",
-        zmiznem: true,
-        zvieratka: [
-            {name: 'rybička', img: './img/rybicka.jpeg', sound: './sounds/ryba.mp3'},
-            {name: 'havo', img: './img/psik.jpeg', sound: './sounds/psik.mp3'},
-            {name: 'žabka', img: './img/zabka.jpeg', sound: './sounds/zaba-kvak.mp3'},
-            {name: 'ovečka', img: './img/ovecka.jpeg', sound: './sounds/ovecka.mp3'},
-            {name: 'sova', img: './img/sova.jpeg', sound: './sounds/vtacik.mp3' },
-            {name: 'mačka', img: './img/macka.jpeg', sound: './sounds/vtacik.mp3' },
-            {name: 'kravička', img: './img/kravicka.jpeg', sound: './sounds/vtacik.mp3' },
-            {name: 'kozička', img: './img/kozicka.jpeg', sound: './sounds/vtacik.mp3' }
-        ],
-         selectedImage: null     
-      };
-    },
-    methods: {
-      showImage(zvieratko) {
-            this.selectedImage = zvieratko.img;
+    <div id="app">
 
-            const audio = new Audio(zvieratko.sound);
-            audio.play();
-            this.$nextTick(() => {
-            const img = document.querySelector('.animal-image');
-            if (img) {
-            img.classList.add('bounce');
-            setTimeout(() => img.classList.remove('bounce'), 1000); 
-      }
-    });
-        },
+        <div class="container d-flex flex-column justify-content-center text-center py-5 my-5">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-text mt-3 ">Aylinka, vyber si svoje zvieratko : </h1>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <button v-for="(zvieratko, index) in zvieratka" :key="index" :tabindex="0"
+                            @click="showImage(zvieratko)" @keydown="handleArrowNavigation($event, index)"
+                            class="btn btn-outline-dark">
+                            {{ zvieratko . name }}
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
 
-        handleArrowNavigation(event, index) {
-        const buttons = document.querySelectorAll('.btn-outline-dark');
-        if (event.key === 'ArrowRight') {
-            const nextIndex = (index + 1) % buttons.length;
-            buttons[nextIndex].focus();
-        } else if (event.key === 'ArrowLeft') {
-            const prevIndex = (index - 1 + buttons.length) % buttons.length;
-            buttons[prevIndex].focus();
-        }
-      }
-    },
-    mounted() {
-      this.$nextTick(() => {
-        const buttons = document.querySelectorAll('.btn-outline-dark');
-        if (buttons.length > 0) {
-          buttons[0].focus();
-        }
-      });
-    }
-  });
- app.mount('#app');
-</script>
+                
+                <div class="shower">
+                    <img v-if="selectedImage" :src="selectedImage" alt="zvieratko" class="animal-image">
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        header: "Aylinkine zvieratká",
+                        message: "Tento elementy sa schovaju ked sa klikne na tlacitko 'zmiznut'",
+                        zmiznem: true,
+                        zvieratka: [{
+                                name: 'rybička',
+                                img: './img/rybicka.jpeg',
+                                sound: './sounds/ryba.mp3'
+                            },
+                            {
+                                name: 'havo',
+                                img: './img/psik.jpeg',
+                                sound: './sounds/psik.mp3'
+                            },
+                            {
+                                name: 'žabka',
+                                img: './img/zabka.jpeg',
+                                sound: './sounds/zaba-kvak.mp3'
+                            },
+                            {
+                                name: 'ovečka',
+                                img: './img/ovecka.jpeg',
+                                sound: './sounds/ovecka.mp3'
+                            },
+                            {
+                                name: 'sova',
+                                img: './img/sova.jpeg',
+                                sound: './sounds/sova.mp3'
+                            },
+                            {
+                                name: 'mačka',
+                                img: './img/macka.jpeg',
+                                sound: './sounds/macka.mp3'
+                            },
+                            {
+                                name: 'kravička',
+                                img: './img/kravicka.jpeg',
+                                sound: './sounds/kravicka.mp3'
+                            },
+                            {
+                                name: 'kozička',
+                                img: './img/kozicka.jpeg',
+                                sound: './sounds/kozicka.mp3'
+                            }
+                        ],
+                        selectedImage: null
+                    };
+                },
+                methods: {
+                    showImage(zvieratko) {
+                        this.selectedImage = zvieratko.img;
+
+                        const audio = new Audio(zvieratko.sound);
+                        audio.play();
+                        this.$nextTick(() => {
+                            const img = document.querySelector('.animal-image');
+                            if (img) {
+                                img.classList.add('bounce');
+                                setTimeout(() => img.classList.remove('bounce'), 1000);
+                            }
+                        });
+                    },
+
+                    handleArrowNavigation(event, index) {
+                        const buttons = document.querySelectorAll('.btn-outline-dark');
+                        if (event.key === 'ArrowRight') {
+                            const nextIndex = (index + 1) % buttons.length;
+                            buttons[nextIndex].focus();
+                        } else if (event.key === 'ArrowLeft') {
+                            const prevIndex = (index - 1 + buttons.length) % buttons.length;
+                            buttons[prevIndex].focus();
+                        }
+                    }
+                },
+                mounted() {
+                    this.$nextTick(() => {
+                        const buttons = document.querySelectorAll('.btn-outline-dark');
+                        if (buttons.length > 0) {
+                            buttons[0].focus();
+                        }
+                    });
+                }
+            });
+            app.mount('#app');
+        </script>
 </body>
+
 </html>
