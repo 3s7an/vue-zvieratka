@@ -16,7 +16,7 @@
 
       .card-header {
         background: #007bff;
-        color: #fff;
+        color: wheat;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         font-family: 'Comic Sans MS', cursive, sans-serif;
         text-align: center;
@@ -28,23 +28,35 @@
         background: transparent;
       }
 
-      .shower {
-        /* border: 3px dashed #6c757d; */
-        border-radius: 10px;
-       
+      h1 {
+        color:#9e602d;
+        background-color: wheat;
+        padding: 10px;
+        border-radius: 50%;
+        padding: 20px;
+      }
+
+       .shower {
+ 
         padding: 20px;
         width: 700px; 
         height: 500px;
         display: flex; 
         justify-content: center; 
         align-items: center; 
-      }
+      } 
 
       .shower img {
+        padding: 200px;
         width: 100%; 
         height: 100%; 
         object-fit: contain; 
         padding: 50px;
+      }
+
+      .control {
+        margin-top: 100px;
+        position: relative;
       }
 
       .btn-outline-dark {
@@ -53,18 +65,18 @@
         border: 2px solid #6c757d;
         border-radius: 20px;
         transition: transform 0.3s, background-color 0.3s;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: #9e602d;;
       }
 
       .btn-outline-dark:hover {
         transform: scale(1.1);
-        background-color: #ffd700;
-        color: black;
+        background-color: #9e602d;
+        color: wheat;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .btn-outline-dark:focus {
-        background-color: #ffe4b5;
+        background-color: #dd985f;
       }
 
       @keyframes bounce {
@@ -77,11 +89,12 @@
       }
 
       body {
-        background-image: url('./img/pozadie.jpeg');
         background-size: cover;
         background-attachment: fixed;
         background-position: bottom;
       }
+      
+      
 
      
     </style>
@@ -90,32 +103,22 @@
 <div id="app">
   
   <div class="container d-flex flex-column align-items-center justify-content-center text-center py-5 my-5">
-    <div class="card w-75">
-        <!-- <div class="card-header">
-            <h1>{{ header }}</h1>
-        </div> -->
-        <div class="card-body">
-            <div class="d-flex justify-content-center">
-                <div class="shower">
-                  <img v-if="selectedImage" :src="selectedImage" alt="zvieratko" class="animal-image">
-                </div>
-            </div>
-            <p class="card-text mt-3">Aylinka, vyber si svoje zvieratko</p>
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-              <button 
-                v-for="(zvieratko, index) in zvieratka" 
-                :key="index" 
-                :tabindex="0" 
-                @click="showImage(zvieratko)" 
-                @keydown="handleArrowNavigation($event, index)"
-                class="btn btn-outline-dark">
-                {{ zvieratko.name }}
-              </button>
-            </div>
-        </div>
-    </div>
-  </div>           
-</div>
+      <h1 class="card-text mt-3 ">Aylinka, vyber si svoje zvieratko</h1>
+        <div class="d-flex flex-wrap justify-content-center gap-2 control">
+            <button 
+              v-for="(zvieratko, index) in zvieratka" 
+              :key="index" 
+              :tabindex="0" 
+               @click="showImage(zvieratko)" 
+              @keydown="handleArrowNavigation($event, index)"
+              class="btn btn-outline-dark">
+              {{ zvieratko.name }}
+            </button>  
+      </div> 
+      <div class="shower">
+        <img v-if="selectedImage" :src="selectedImage" alt="zvieratko" class="animal-image">
+      </div>          
+  </div>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
   const app = Vue.createApp({
@@ -129,7 +132,10 @@
             {name: 'havo', img: './img/psik.jpeg', sound: './sounds/psik.mp3'},
             {name: 'žabka', img: './img/zabka.jpeg', sound: './sounds/zaba-kvak.mp3'},
             {name: 'ovečka', img: './img/ovecka.jpeg', sound: './sounds/ovecka.mp3'},
-            {name: 'vtáčik', img: './img/vtacik.jpeg', sound: './sounds/vtacik.mp3' },
+            {name: 'sova', img: './img/sova.jpeg', sound: './sounds/vtacik.mp3' },
+            {name: 'mačka', img: './img/macka.jpeg', sound: './sounds/vtacik.mp3' },
+            {name: 'kravička', img: './img/kravicka.jpeg', sound: './sounds/vtacik.mp3' },
+            {name: 'kozička', img: './img/kozicka.jpeg', sound: './sounds/vtacik.mp3' }
         ],
          selectedImage: null     
       };
